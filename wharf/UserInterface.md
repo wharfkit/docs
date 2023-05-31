@@ -233,7 +233,6 @@ A `UserInterface` must define an `onError` method to define how the user interfa
 
 ##### `translate`
 ```
-/** Translate a string using the UI's language **/
 translate: UserInterfaceTranslateFunction
 ```
 
@@ -243,7 +242,6 @@ The [WebRenderer](#) serves as [an example of how this can be done](https://gith
 
 ##### `getTranslate`
 ```
-/** Returns a translator for a specific namespace */
 getTranslate: (namespace?: string) => UserInterfaceTranslateFunction
 ```
 
@@ -253,7 +251,6 @@ By default the [AbstractUserInterface](#) class will [define this method](https:
 
 ##### `addTranslations`
 ```
-/** Programmatically add new localization strings to the  user interface */
 addTranslations: (translations: LocaleDefinitions) => void
 ```
 
