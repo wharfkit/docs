@@ -1,6 +1,6 @@
 # UserInterface
 
-The [SessionKit](#) exports an interface named `UserInterface` which defines how a graphical interface behaves during the [login](#) and [transact](#) method calls. 
+The [SessionKit](#) exports an interface named `UserInterface`, which defines how a graphical interface behaves during the [login](#) and [transact](#) method calls. 
 
 ## Usage
 
@@ -22,33 +22,33 @@ const sessionKit = new SessionKit({
 })
 ```
 
-Once an instance is provided to the [SessionKit](#), it will programmatically make calls to the `UserInterface` where appropriate. Some examples of processes which will utilize the `UserInteface` include:
+Once an instance is provided to the [SessionKit](#), it will programmatically make calls to the `UserInterface` where appropriate. Some examples of when the instance will  utilize the `UserInteface` include:
 
-- During calls to the [login](#) method.
-- While processing the included [LoginPlugin](#) hooks.
-- During calls to the [transact](#) method.
-- While processing the included [TransactPlugin](#) hooks.
-- During interactions with the active [WalletPlugin](#).
+- During calls to the [login](#) method
+- While processing the included [LoginPlugin](#) hooks
+- During calls to the [transact](#) method
+- While processing the included [TransactPlugin](#) hooks
+- During interactions with the active [WalletPlugin](#)
 
 ## Responsibilities
 
 The `UserInterface` is primarily responsible for two major aspects of the [SessionKit](#):
 
-- Communication of information to the user.
-- Prompting and handling user interactions.
+- Communication of information to the user
+- Prompting and handling user interactions
 
 ### Communication
 
-During typical [SessionKit](#) operations there is often benefit to providing the end user with status updates and information about their activity. The `UserInterface` defines multiple event-based methods in which external operations are able to call out to the user interface to provide relevant information to users.
+During typical [SessionKit](#) operations, there is often benefit to providing the end user with status updates and information about their activity. The `UserInterface` defines multiple event-based methods in which external operations are able to call out to the user interface to provide relevant information to users.
 
 ### Interactions
 
-The interaction between the end user and the [SessionKit](#) are facilitated by the `UserInterface` through a number of predefined events and method calls. During these interactions, the [SessionKit](#) will trigger and asyncronous operations against the `UserInterface` while it awaits the users response before proceeding.
+The interactions between the end user and the [SessionKit](#) are facilitated by the `UserInterface` through a number of predefined events and method calls. During these interactions, the [SessionKit](#) will trigger asyncronous operations against the `UserInterface` while waiting for the user's response before proceeding.
 
 
 ## Implementation
 
-The `UserInterface` components of the [SessionKit](#) are designed with layering in mind, optionally allowing developers to extends and inherit from in order to build custom instances.
+The `UserInterface` components of the [SessionKit](#) are designed with layering in mind, optionally allowing developers to extend and inherit from it, in order to build custom instances.
 
 ```
 DefinedUserInterface (Class Implementation)
@@ -73,13 +73,13 @@ To better understand the structure behind a `UserInterface` implementation from 
 Wharf currently has two major processes that each have a finite lifecycle: 
 
 1. The [login](#) call on an instance of the [SessionKit](#) 
-2. the [transact](#) call on each individual [Session](#) .
+2. the [transact](#) call on each individual [Session](#) 
 
  When developers make calls to these methods, a lifecycle [context](#) object is created for the duration of the call. Through these processes the [context](#) also provides any [plugins](#) included the ability to interact with the user interface in a number of ways.
 
 ##### Login Lifecycle
 
-Listed below is the sequence of events within the [login](#) method which will call the `UserInterface`.
+Listed below is the sequence of events within the [login](#) method which will call the `UserInterface`:
 
 ###### `onLogin`
 
@@ -104,7 +104,7 @@ After initial processing has been completed by the [SessionKit](#), the `login` 
 onLoginComplete: () => Promise<void>
 ```
 
-After the [WalletPlugin](#) successfully completes it's login operations, the [SessionKit](#) will issue the `onLoginComplete` call against the `UserInterface`, which gives it the opportunity to reset itself and perform any clean up required.
+After the [WalletPlugin](#) successfully completes its login operations, the [SessionKit](#) will issue the `onLoginComplete` call against the `UserInterface`, which gives it the opportunity to reset itself and perform any clean-up required.
 
 ##### Transact Lifecycle
 
@@ -122,7 +122,7 @@ Immediately upon the developer's call to [transact](#) against the [SessionKit](
 onSign: () => Promise<void>
 ```
 
-After any included [TransactPlugin](#) hooks have had their opportunity to processes, the `onSign` call is made to the user interface to indicate that the tranasction is about to be signed by the [WalletPlugin](#). 
+After any included [TransactPlugin](#) hooks have had their opportunity to process, the `onSign` call is made to the user interface to indicate that the transaction is about to be signed by the [WalletPlugin](#). 
 
 ###### `onSignComplete`
 ```ts
@@ -145,7 +145,7 @@ If the [transact](#) call has the default flag of `broadcast: true`, the `onBroa
 onBroadcastComplete: () => Promise<void>
 ```
 
-Following a successful call to the broadcast the transaction, the `onBroadcastComplete` call is made to indicate that the transaction has been successfully broadcast to the designed blockchain. 
+Following a successful call to broadcast the transaction, the `onBroadcastComplete` call is made to indicate that the transaction has been successfully broadcast to the designated blockchain. 
 
 **Note**: If the `broadcast: false` flag is set, this event will not be called.
 
@@ -162,13 +162,13 @@ Outside of the event-driven lifecycle methods above, a number of more generic me
 
 These methods are made available in:
 
-- The [SessionKit](#) during the [login](#) method call.
-- A [Session](#) during the [transact](#) method call.
-- A [WalletPlugin](#) during the [login](#) and [transact](#) calls.
-- A [LoginPlugin](#) during the [login](#) call.
-- A [TransactPlugin](#) during the [transact](#) call.
+- The [SessionKit](#) during the [login](#) method call
+- A [Session](#) during the [transact](#) method call
+- A [WalletPlugin](#) during the [login](#) and [transact](#) calls
+- A [LoginPlugin](#) during the [login](#) call
+- A [TransactPlugin](#) during the [transact](#) call
 
-Wharf through both the [SessionKit](#) and [Session](#) classes will have direct access to these calls, while all of the various plugin types will have access to them through their specific [context](#) objects. The `UserInterface` instance is accessible to them through the `context.ui` field.
+Wharf will have direct access to these calls through both the [SessionKit](#) and [Session](#) classes, while all of the various plugin types will have access to them through their specific [context](#) objects. The `UserInterface` instance is accessible to them through the `context.ui` field.
 
 ##### `prompt`
 ```
@@ -190,9 +190,10 @@ interface PromptArgs {
 }
 ```
 
-- The `title` is provided as a header for the display that will be rendered to the user.
-- A `body` may optionally be defined with a text-based description of what you are prompting for.
-- The `elements` array consists of one or more `PromptElement` instances, which instruct the `UserInterface` how to present this prompt to the user.
+To break this down:
+- The `title` is provided as a header for the display that will be rendered to the user
+- A `body` may optionally be defined with a text-based description of what you are prompting for
+- The `elements` array consists of one or more `PromptElement` instances, which instruct the `UserInterface` how to present this prompt to the user
 
 
 The `PromptElement` array is an object defined as follows:
@@ -205,17 +206,18 @@ interface PromptElement {
 }
 ```
 
-- The `type` field must match on of the strings included. Each string represents a different type of prompt 
-- A `label` for the element, typically providing context to the element.
-- A `data` object for the element, which is specific to the element itself and how its renderered.
+To break this down:
+- The `type` field must match one of the strings included; Each string represents a different type of prompt 
+- A `label` for the element, typically providing context to the element
+- A `data` object for the element, which is specific to the element itself and how its renderered
 
 The individual element types are further outlined in the [PromptElement](#) document.
 
 Once the promise resolves, one of three things will happen:
 
-- Upon `resolve`, the plugin can treat this as an "accept" or "OK" message and proceed.
-- Upon `reject`, the plugin can treat this as an "decline" or "Cancel" message and proceed.
-- Upon `cancel`, the plugin and current lifecycle method will be aborted.
+- Upon `resolve`, the plugin can treat this as an "accept" or "OK" message and proceed
+- Upon `reject`, the plugin can treat this as a "decline" or "Cancel" message and proceed
+- Upon `cancel`, the plugin and current lifecycle method will be aborted
 
 ##### `status`
 ```
@@ -236,9 +238,9 @@ A `UserInterface` must define an `onError` method to define how the user interfa
 translate: UserInterfaceTranslateFunction
 ```
 
-Part of the **Communication** responsibility of the `UserInterface` is also handling the translation of the content being passed to the user. This method must follow the [UserInterfaceTranslateFunction](#) interface and utilize whichever technologies are best suited to the task to facilitate translating content. 
+Part of the **Communication** responsibility of the `UserInterface` is also handling the translation of the content being passed to the user. This method must follow the [UserInterfaceTranslateFunction](#) interface and utilize whichever technologies are best suited to the task to facilitate content translation. 
 
-The [WebRenderer](#) serves as [an example of how this can be done](https://github.com/wharfkit/web-renderer/blob/06cddd54ec78d8110747d4e5d67989a8cd1dce8f/src/index.ts#L244-L250), as it translates Wharf's expectation of a translation string into the i18n library its using.
+The [WebRenderer](#) serves as [an example of how this can be done](https://github.com/wharfkit/web-renderer/blob/06cddd54ec78d8110747d4e5d67989a8cd1dce8f/src/index.ts#L244-L250), as it translates Wharf's expectation of a translation string into the i18n library it's using.
 
 ##### `getTranslate`
 ```
@@ -254,7 +256,7 @@ By default the [AbstractUserInterface](#) class will [define this method](https:
 addTranslations: (translations: LocaleDefinitions) => void
 ```
 
-The final responsibility of the `UserInterface` in regards to translations is the ability for Wharf or a plugin to be able to dynamically add translation strings into the user interface.
+The final translation responsibility of the `UserInterface` is the ability for Wharf or a plugin to be able to dynamically add translation strings into the user interface.
 
 The [WebRenderer](#) again serves as [an example of how this can be done](https://github.com/wharfkit/web-renderer/blob/06cddd54ec78d8110747d4e5d67989a8cd1dce8f/src/index.ts#L252-L254). 
 
