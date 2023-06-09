@@ -1,15 +1,15 @@
 # UserInterface
 
-An instance of a `UserInterface` is required for the [SessionKit](#) and is responsible for rendering out information to an end user and facilitating interaction when required. The [SessionKit](#) exports an interface named `UserInterface`, which defines the patterns used for interactions during the [login](#) and [transact](#) method calls.
+An instance of a `UserInterface` is required for the [SessionKit](#) and is responsible for rendering out information to the end user and facilitating interaction when required. The [SessionKit](#) does this by exporting an interface named `UserInterface`, which defines the patterns used for interactions during the [login](#) and [transact](#) method calls.
 
 ## Usage
 
-The typical application developer will never make calls directly against the `UserInterface`, with the exception being developers who: 
+A typical developer will never make calls directly against the `UserInterface`, with the exception being developers who:
 
 1. Create any type of [Plugin](#), such as [LoginPlugin](#), [TransactPlugin](#), or [WalletPlugin](#) packages
 2. Create a custom `UserInterface` instance for inclusion in the [SessionKit](#)
 
-Application developers who are building interactive applications will however be required to include an instance of a `UserInterface` to the [SessionKit](#). This is done during the instantiation of the [SessionKit](#), an example of which is below: 
+All developers who are building interactive applications will however be required to include an instance of a `UserInterface` to the [SessionKit](#) during instantiation, an example of which is below:
 
 ```ts
 import { SessionKit } from '@wharfkit/session'
@@ -17,20 +17,17 @@ import { WebRenderer } from '@wharfkit/web-renderer'
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor'
 
 const sessionKit = new SessionKit({
-    appName: 'myapp',
-    chains: [{
-        id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-        url: 'http://jungle4.greymass.com'
-    }],
-    ui: new WebRenderer(), // <-- An instance of a `UserInterface`
-    walletPlugins: [new WalletPluginAnchor()],
+   appName: 'myapp',
+   chains: [{
+       id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+       url: 'http://jungle4.greymass.com'
+   }],
+   ui: new WebRenderer(), // <-- An instance of a `UserInterface`
+   walletPlugins: [new WalletPluginAnchor()],
 })
 ```
 
-Once an instance is provided to the [SessionKit](#), it will automatically make calls to the `UserInterface` when required. 
-
-Wharf maintains and distributes a core package called the [WebRenderer](#) that acts as a default implementation of a `UserInterface`. More details about this  implementation on the [WebRenderer](#) documentation or on the [Github](https://github.com/wharfkit/web-renderer) respository.
-
+Wharf maintains and distributes a core package called the [WebRenderer](#) that acts as a default implementation of a `UserInterface`. More details about this implementation on the [WebRenderer](#) documentation or on the [Github](https://github.com/wharfkit/web-renderer) repository.
 
 ## Purpose
 
@@ -46,7 +43,7 @@ During [SessionKit](#) operations, there is often benefit to providing the end u
 
 **Interactions**
 
-The interaction between the end user and the [SessionKit](#) are facilitated by the `UserInterface` through a number of predefined events and method calls. During these interactions, the [SessionKit](#) will trigger asyncronous operations against the `UserInterface` while waiting for the user's response before proceeding.
+The interaction between the end user and the [SessionKit](#) are facilitated by the `UserInterface` through a number of predefined events and method calls. During these interactions, the [SessionKit](#) will trigger asynchronous operations against the `UserInterface` while waiting for the user's response before proceeding.
 
 ## Specification
 
@@ -56,8 +53,8 @@ The remainder of this document will target advanced developers who wish to furth
 
 A developer who is creating a custom `UserInterface` instance will need to understand:
 
-- The [Architecture](#) design to effectively integrate with the [SessionKit](#) and various [Plugins](#)
-- The [Life Cycle](#) events and methods for Login and Transact
+- The [Architecture](#) design to integrate with the [SessionKit](#) and various [Plugins](#)
+- The [Life Cycle](#) events and methods for [Login](#) and [Transact](#)
 - The [Prompt](#) method and how to facilitate interactivity
 - The [Translation](#) interface to allow localization of the UI
 - The [Logging](#) and [Error Handling](#) events
@@ -66,28 +63,30 @@ A full example of how a `UserInterface` can be implemented can be found in the [
 
 ### Architecture
 
-The `UserInterface` components of the [SessionKit](#) are designed with inheritence in mind to optionally allow developers to extend existing core code in order to more effectively build custom implementations. This inheritance structure can roughly be viewed as:
+The `UserInterface` components of the [SessionKit](#) are designed with inheritance in mind to optionally allow developers to extend existing core code in order to more effectively build custom implementations. This inheritance structure can roughly be viewed as:
 
 ```
 DefinedUserInterface (e.g. WebRenderer)
 ↳ extends AbstractUserInterface
-  ↳ implements UserInterface
+ ↳ implements UserInterface
 ```
 
-The `UserInterface` ([docs](https://wharfkit.github.io/session/interfaces/UserInterface.html)) is defined as an interface with the data structures that the [SessionKit](#) requires to function. One layer above this is an `AbstractUserInterface` ([docs](https://wharfkit.github.io/session/classes/AbstractUserInterface.html)) declared as an abstract class from which complete implementations may extend in order to inherit base functionality.
+The `UserInterface` ([docs](https://wharfkit.github.io/session/interfaces/UserInterface.html)) is defined as an interface with the data structures that the [SessionKit](#) requires in order to function. One layer above this is an `AbstractUserInterface` ([docs](https://wharfkit.github.io/session/classes/AbstractUserInterface.html)) declared as an abstract class from which complete implementations may extend in order to inherit base functionality.
 
 ### Life Cycle
 
 Wharf through the Session Kit currently has two major life cycle processes in which the `UserInterface` is utilized:
 
-1. The [login](#) call on an instance of the [SessionKit](#) 
+1. The [login](#) call on an instance of the [SessionKit](#)
 2. The [transact](#) call on an individual [Session](#)
 
-When developers make calls to these methods in their applications, a life cycle event is started and a [context](#) object is spawned for its duration. This [context](#) contains an instance of the `UserInterface`, which the [SessionKit](#) and various [Plugins](#) may call to interact with the user. 
+When developers make calls to these methods in their applications, a life cycle event is started and a [context](#) object is spawned for its duration. This [context](#) contains an instance of the `UserInterface`, which the [SessionKit](#) and various [Plugins](#) may call to interact with the user.
 
 #### Login
 
-When an application calls the [login](#) method of the [SessionKit](#) a series of events is triggered against an implemented `UserInterface` and its methods. Listed below are all of the methods this sequence will call in chronological order.
+When an application calls the [login](#) method of the [SessionKit](#) a series of events is triggered against an implemented `UserInterface` and its methods. 
+
+Listed below are all of the methods this sequence will call in chronological order.
 
 ##### onLogin
 
@@ -95,7 +94,7 @@ When an application calls the [login](#) method of the [SessionKit](#) a series 
 onLogin: () => Promise<void>
 ```
 
-Immediately upon the developer's call to [login](#) against the [SessionKit](#), the `onLogin` call is made against the `UserInterface`. This call passes no data to the interface and expects no response, but gives the opportunity to the `UserInterface` to prepare itself for the incoming `login` call. 
+Immediately upon the developer's call to [login](#) against the [SessionKit](#), the `onLogin` call is made against the `UserInterface`. This call passes no data to the interface and expects no response, but gives the opportunity to the `UserInterface` to prepare itself for the incoming `login` call.
 
 This time can be used to prepare UI elements (in DOM or other mediums) before any actual user interaction.
 
@@ -110,11 +109,11 @@ After initial processing has been completed by the [SessionKit](#), the `login` 
 This data will be used in order to facilitate a number of scenarios based on the various capabilities of the [WalletPlugin](#) instances in use:
 
 1. Prompt the user to select a [WalletPlugin](#), if multiple are provided and it was not defined during the [login](#) call.
-2. Prompt the user to select a blockchain, if multiple are provided and the selected [WalletPlugin](#) has [requiresChainSelect](https://wharfkit.github.io/session/interfaces/WalletPluginConfig.html#requiresChainSelect) set to `true`. If the [WalletPlugin](#) also has an array of `supportedChains` defined, the list of available chains must be filtered down to match this list. 
+2. Prompt the user to select a blockchain, if multiple are provided and the selected [WalletPlugin](#) has [requiresChainSelect](https://wharfkit.github.io/session/interfaces/WalletPluginConfig.html#requiresChainSelect) set to `true`. If the [WalletPlugin](#) also has an array of `supportedChains` defined, the list of available chains must be filtered down to match this list.
 3. Prompt the user to enter an account name manually, if the selected [WalletPlugin](#) has [requiresPermissionEntry](https://wharfkit.github.io/session/interfaces/WalletPluginConfig.html#requiresPermissionEntry) set to `true`.
 4. Prompt the user to select a permission associated to a [PublicKey](#), if the selected [WalletPlugin](#) has [requiresPermissionSelect](https://wharfkit.github.io/session/interfaces/WalletPluginConfig.html#requiresPermissionSelect) set to `true`.
 
-The [SessionKit](#) will then await a response from the `UserInterface` to provide this information using the [UserInterfaceLoginResponse](#) pattern or throw an `Error` if its unable to.
+The [SessionKit](#) will await a response from the `UserInterface` conforming to the [UserInterfaceLoginResponse](#) pattern or until an `Error` is thrown.
 
 ##### onLoginComplete
 ```ts
@@ -125,7 +124,9 @@ After the [WalletPlugin](#) successfully completes its login operations, the [Se
 
 #### Transact
 
-When an application calls the [transact](#) method on a [Session](#), a series of events is triggered against an implemented `UserInterface` and its methods. Listed below are all of the methods this sequence will call in chronological order.
+When an application calls the [transact](#) method on a [Session](#), a series of events is triggered against an implemented `UserInterface` and its methods. 
+
+Listed below are all of the methods this sequence will call in chronological order.
 
 ##### onTransact
 ```ts
@@ -139,28 +140,32 @@ Immediately upon the developer's call to [transact](#) against the [SessionKit](
 onSign: () => Promise<void>
 ```
 
-After any included [TransactPlugin](#) hooks have had their opportunity to process, the `onSign` call is made to the user interface to indicate that the transaction is about to be signed by the [WalletPlugin](#). 
+After any included [TransactPlugin](#) instances have had their opportunity to process their [beforeSign](#) hooks, the `onSign` call is made to the user interface to indicate that the transaction is about to be signed by the [WalletPlugin](#).
 
 ##### onSignComplete
 ```ts
 onSignComplete: () => Promise<void>
 ```
 
-Following a successful call to the [WalletPlugin](#) to sign the transaction, the `onSignComplete` call is made to indicate a signature has been retrieved.
+Following a successful call to the [WalletPlugin](#) to sign the transaction and all [TransactPlugin](#) instances have executed their [afterSign](#) hooks, the `onSignComplete` call is made to indicate a signature has been retrieved.
 
 ##### onBroadcast
 ```ts
 onBroadcast: () => Promise<void>
 ```
 
-If the [transact](#) call has the default flag of `broadcast: true`, the `onBroadcast` call is made to the user interface as it prepares to broadcast the transaction to the network. Note that if the `broadcast: false` flag is set, this event will not be called.
+If the [transact](#) call has the default flag of `broadcast: true`, the `onBroadcast` call is made to the user interface as it prepares to broadcast the transaction to the network. 
+
+Note that if the `broadcast: false` flag is set, this event will not be called.
 
 ##### onBroadcastComplete
 ```ts
 onBroadcastComplete: () => Promise<void>
 ```
 
-Following a successful call to broadcast the transaction, the `onBroadcastComplete` call is made to indicate that the transaction has been successfully broadcast to the designated blockchain. Note that if the `broadcast: false` flag is set, this event will not be called.
+Following a successful call to broadcast the transaction and execution of the [TransactPlugin](#) instances [afterBroadcast](#) hooks, the `onBroadcastComplete` call is made to indicate that the transaction has been successfully broadcast to the designated blockchain. 
+
+Note that if the `broadcast: false` flag is set, this event will not be called.
 
 ##### onTransactComplete
 ```ts
@@ -171,7 +176,9 @@ Upon success of the entire [transact](#) life cycle flow, the `onTransactComplet
 
 ### Prompt
 
-Outside of the event-driven life cycle methods above, one of the most important abilities a `UserInterface` provides is for [Plugins](#) to interact with users. This is done using the `prompt` call made available through the [context](#) given to every [plugin](#) to either display information or await some form of user interaction. Examples of instances where `prompt` may be called are:
+Outside of the event-driven life cycle methods above, one of the most important abilities a `UserInterface` provides is for [Plugins](#) to interact with users. This is done using the `prompt` call made available through the [context](#) given to every [plugin](#) to either display information or await some form of user interaction. 
+
+Examples of instances where `prompt` may be called are:
 
 - A [WalletPlugin](#) during the [login](#) and [transact](#) calls
 - A [LoginPlugin](#) during the [login](#) call
@@ -181,15 +188,15 @@ Each [plugin](#) that makes the call needs to provide arguments that match the `
 
 #### Rendering
 
-It is the responsibility of the `UserInterface` to implement the `prompt` call, interpret its request, and render the appropriate elements to the end user. 
+It is the responsibility of the `UserInterface` to implement the `prompt` call, interpret its request, and render the appropriate elements to the end user.
 
 The arguments passed to the `UserInterface` that are accepted by the `prompt` call will match:
 
 ```ts
 interface PromptArgs {
-    title: string
-    body?: string
-    elements: PromptElement[]
+   title: string
+   body?: string
+   elements: PromptElement[]
 }
 ```
 
@@ -200,21 +207,21 @@ It's up to the renderer to decide the best use of this information, but in gener
 - The `elements` array consists of one or more `PromptElement` instances, which instruct the `UserInterface` how to present this prompt to the user
 
 
-The `elements` array is populated by one or more `PromptElement` objects that make up the desired layout presented to the user. 
+The `elements` array is populated by one or more `PromptElement` objects that make up the desired layout presented to the user.
 
 ```ts
 interface PromptElement {
-    type: 'accept' | 'asset' | 'button' | 'close' | 'countdown' | 'link' | 'qr' | 'textarea'
-    label?: string
-    data?: unknown
+   type: 'accept' | 'asset' | 'button' | 'close' | 'countdown' | 'link' | 'qr' | 'textarea'
+   label?: string
+   data?: unknown
 }
 ```
 
-These should be pre-built elements internal to the `UserInterface` that can accomodate for certain types of interactive elements.
+These should be pre-built elements internal to the `UserInterface` that can accommodate for certain types of interactive events.
 
-- The `type` field must match on of the strings included. Each string represents a different type of prompt
+- The `type` field must match one of the strings included. Each string represents a different type of prompt
 - A `label` for the element, typically providing context to the element
-- A `data` object for the element, which is specific to the element itself and how its renderered
+- A `data` object for the element, which is specific to the element itself and how it's rendered
 
 The individual element types and required data are further outlined in the [PromptElement](#) document.
 
@@ -226,7 +233,7 @@ The `prompt` call is asynchronous and the [SessionKit](#) or [Plugin](#) will aw
 - Reject the promise (which acts as "reject and move on" response)
 - Cancel the promise (which aborts the entire login/transact request)
 
-
+This response contains no specific data but instead offers the three above logic paths using the [CancelablePromise](#) pattern.
 
 
 ### Logging
@@ -241,7 +248,7 @@ The `status` method is a generic string-based system on the user interface which
 
 ### Translation
 
-Part of the **Communication** responsibility of the `UserInterface` is also handling the translation of all the content being passed to the user. 
+Part of the **Communication** responsibility of the `UserInterface` is also handling the translation of all the content being passed to the user. The `UserInterface` library should implement an i18n compatible translation library which allows the use of key-based translation strings, which can be provided by either the [SessionKit](#) or any type of [Plugin](#).
 
 
 #### translate
@@ -254,9 +261,9 @@ This method must follow the [UserInterfaceTranslateFunction](#) interface and ut
 
 ```ts
 export type UserInterfaceTranslateFunction = (
-    key: string,
-    options?: UserInterfaceTranslateOptions,
-    namespace?: string
+   key: string,
+   options?: UserInterfaceTranslateOptions,
+   namespace?: string
 ) => string
 ```
 
@@ -266,7 +273,7 @@ export type UserInterfaceTranslateFunction = (
 getTranslate: (namespace?: string) => UserInterfaceTranslateFunction
 ```
 
-This method defines how Wharf or [Plugins](#) should retrieve an instance of the `UserInterfaceTranslateFunction` of a given namespace. [Plugins](#) specifically will make use of this call to access and provide translations for their content within a given user interface. 
+This method defines how Wharf or [Plugins](#) should retrieve an instance of the `UserInterfaceTranslateFunction` of a given namespace. [Plugins](#) specifically will make use of this call to access and provide translations for their content within a given user interface.
 
 By default the [AbstractUserInterface](#) class will [define this method](https://github.com/wharfkit/session/blob/20d64d6410effda124265cd94fabf0da8a08e0c8/src/ui.ts#L118-L120) for use in plugins.
 
@@ -277,7 +284,7 @@ addTranslations: (translations: LocaleDefinitions) => void
 
 The final translation responsibility of the `UserInterface` is the ability for Wharf or a plugin to be able to dynamically add translation strings into the user interface. This method is added so that the [SessionKit](#) and  various [Plugins](#) can programmatically add translation strings to the dictionary.
 
-The [WebRenderer](#) again serves as [an example of how this can be done](https://github.com/wharfkit/web-renderer/blob/06cddd54ec78d8110747d4e5d67989a8cd1dce8f/src/index.ts#L252-L254). 
+The [WebRenderer](#) again serves as [an example of how this can be done](https://github.com/wharfkit/web-renderer/blob/06cddd54ec78d8110747d4e5d67989a8cd1dce8f/src/index.ts#L252-L254).
 
 
 ### Error Handling
@@ -287,4 +294,5 @@ The [WebRenderer](#) again serves as [an example of how this can be done](https:
 onError: (error: Error) => Promise<void>
 ```
 
-A `UserInterface` must define an `onError` method to define how the user interface handles errors thrown by the [SessionKit](#). These can be displayed directly to users, interpretted and handled based on their content, and logged externally to help troubleshoot issues.
+A `UserInterface` must define an `onError` method to define how the user interface handles errors thrown by the [SessionKit](#). These can be displayed directly to users, interpreted and handled based on their content, and logged externally to help troubleshoot issues.
+
