@@ -20,7 +20,7 @@ if (response.abi) {
 }
 ```
 
-An `ABI` can also be defined manually:
+An `ABI` can also be defined manually as code:
 
 ```ts
 const abi = ABI.from({
@@ -99,7 +99,7 @@ const decoded = action.decodeData(abi)
 */
 ```
 
-### When decoding `Action` data
+### When decoding `Action` data using the Serializer
 
 ```ts
 const { abi } = await client.v1.chain.get_abi("eosio.token")

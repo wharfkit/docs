@@ -296,3 +296,6 @@ onError: (error: Error) => Promise<void>
 
 A `UserInterface` must define an `onError` method to define how the user interface handles errors thrown by the [SessionKit](#). These can be displayed directly to users, interpreted and handled based on their content, and logged externally to help troubleshoot issues.
 
+## Reference
+
+- 
