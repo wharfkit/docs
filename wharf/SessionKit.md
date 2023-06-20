@@ -1,4 +1,6 @@
-# SessionKit
+# SessionKit Index
+
+**Page will have documentation overview of this Kit and links to other documents.**
 
 The `SessionKit` is responsible for creating and managing end user [Session](#) instances for web applications through actions such as [login](#) and [restore](#). 
 

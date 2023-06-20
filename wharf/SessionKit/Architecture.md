@@ -1,4 +1,4 @@
-# Session Kit
+# Architecture
 
 One of Wharf's major components in the Session Kit, a software development kit focused on managing Antelope-based user sessions in web applications. 
 
@@ -26,51 +26,51 @@ Developers working with the Session Kit will primarily be working with individua
 
 Read more in the [Session](#) documentation.
 
-### `WalletPlugin`
+### [WalletPlugin](#)
 
 Each [Session](#) instance requires one [WalletPlugin](#) to facilitate communication between the user session and user wallet.
 
 Read more in the [WalletPlugin](#) documentation.
 
-### `UserInterface`
+### [UserInterface](#)
 
 Each [Session](#) may optionally be associated to one [UserInterface](#) to allow interactivity during its processes.
 
 Read more in the [UserInterface](#) documentation.
 
-### `ABICache`
+### [ABICache](#)
 
 Read more in the [ABICache](#) documentation.
 
-### `TransactPlugin`
+### [TransactPlugin](#)
 
 Read more in the [TransactPlugin](#) documentation.
 
-### `TransactContext`
+### [TransactContext](#)
 
 - Provides all the data and methods required for a plugin.
 
 Read more in the [TransactContext](#) documentation.
 
-### `TransactHook`
+### [TransactHook](#)
 
 Read more in the [TransactHook](#) documentation.
 
-### `LoginPlugin`
+### [LoginPlugin](#)
 
 Read more in the [SessionKit](#) documentation.
 
-### `LoginHooks`
+### [LoginHooks](#)
 
 Read more in the [LoginHooks](#) documentation.
 
 
-### `LoginContext`
+### [LoginContext](#)
 
 Read more in the [LoginContext](#) documentation.
 
 
-### `SessionStorage`
+### [SessionStorage](#)
 
 Read more in the [SessionStorage](#) documentation.
 

@@ -3,6 +3,11 @@
     - Allow a user perform a transaction
     - Proving a users identity
     - Providing resources for a user
+    - Building Plugins
+        - Login
+        - Transact
+        - Wallet
+        - UserInterface
 - ContractKit
     - Generating code based on a contract
     - Querying table data
