@@ -83,3 +83,11 @@ const action = Action.from({
     })
 })
 ```
+
+## Gotchas
+
+When using the decorated versions of a `Struct` in a TypeScript codebase, there are a few things that may be required depending on your version of TypeScript and the bundler in use.
+
+Within the `tsconfig.json` in your project, one thing that is required is the use of `"experimentalDecorators": true`. An example of this can be found in [Unicove's tsconfig.json](https://github.com/greymass/unicove/blob/c98183514bb919719ac46fa97aa931c9d3998152/tsconfig.json#L19) file.
+
+Another flag that may be required depending on configuration is the `"useDefineForClassFields": true`. You know you'll need this one if you define a `Struct`, and attempt to use it, and all of the values within it come back as `undefined`.
