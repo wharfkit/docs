@@ -104,7 +104,7 @@ console.log(balance.value) // Number(0.0001)
 
 ### Working with Integers
 
-All storage and mathmatical operations use Integers. The `Int64` value of an asset is stored as the `units` property on every asset.
+All storage and mathematical operations use Integers. The `Int64` value of an asset is stored as the `units` property on every asset.
 
 ```ts
 const balance = Asset.from("10.0000 FOO")

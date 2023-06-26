@@ -10,7 +10,7 @@ Each implementation extends the interface named UserInterface from the [SessionK
 
 Each implementation may also extend the `AbstractUserInterface` to gain some base functionality. 
 
-A UserInterface instance must be established by the developer in their app, passing any configuraiton options, which then must be passed into the [SessionKit](#) during construction.
+A UserInterface instance must be established by the developer in their app, passing any configuration options, which then must be passed into the [SessionKit](#) during construction.
 
 ## Login
 

@@ -33,7 +33,7 @@ import { UInt64 } from '@wharfkit/antelope'
 const integer = UInt64.from(12345678)
 ```
 
-All `Int` types interally will use instance of BN.js, which which can be accessed as the `.value` property.
+All `Int` types internally will use instance of BN.js, which which can be accessed as the `.value` property.
 
 ```ts
 const integer = UInt64.from(12345678)
@@ -58,7 +58,7 @@ const isEqual = a.equals(1) // results in `true`
 const isEqual = a.equals(2) // results in `false`
 ```
 
-A secondary boolean parameter offers strict checking, which will cause the comparision to only be valid if the `Int` types are the same type.
+A secondary boolean parameter offers strict checking, which will cause the comparison to only be valid if the `Int` types are the same type.
 
 ```ts
 const a = Int64.from(1)

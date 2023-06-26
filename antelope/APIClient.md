@@ -46,7 +46,7 @@ client.v1.chain.get_info().then((response) => {
 
 #### Typed Responses
 
-The `response` returned from the `APIClient` instance will be fully typed using Antlope core types. The above call will return an instance of [GetInfoResponse](https://github.com/wharfkit/antelope/blob/070bfb3bfe4b5f50f031dc58eb18090806e06c07/src/api/v1/types.ts#L324-L370), which automatically has all of the values in a typed state.
+The `response` returned from the `APIClient` instance will be fully typed using Antelope core types. The above call will return an instance of [GetInfoResponse](https://github.com/wharfkit/antelope/blob/070bfb3bfe4b5f50f031dc58eb18090806e06c07/src/api/v1/types.ts#L324-L370), which automatically has all of the values in a typed state.
 
 ```ts
 GetInfoResponse {
@@ -190,7 +190,7 @@ The `response` will be fully typed and ready to use in a developers application.
 
 #### Manually calling undefined API endpoints
 
-If an endpoint isn't defined and avaiable for immediate use, the above call structure can be used directly against an `APIClient` to make ad-hoc calls.
+If an endpoint isn't defined and available for immediate use, the above call structure can be used directly against an `APIClient` to make ad-hoc calls.
 
 ```ts
 const response = await client.call({

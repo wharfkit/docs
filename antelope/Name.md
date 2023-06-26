@@ -70,7 +70,7 @@ if (stringValue === nameValue) {
 }
 ```
 
-Instead of doing string comparisions in your code, its recommended you use the `equals` operator to check for equality.
+Instead of doing string comparisons in your code, its recommended you use the `equals` operator to check for equality.
 
 ```ts
 const stringValue = 'teamgreymass'
@@ -81,7 +81,7 @@ if (nameValue.equals(stringValue)) {
 }
 ```
 
-The `equals` operator will allow comparision between any valid `Name` type, including plain strings, other `Name` instances, and `UInt64` instances.
+The `equals` operator will allow comparison between any valid `Name` type, including plain strings, other `Name` instances, and `UInt64` instances.
 
 ```ts
 const accountName = Name.from('teamgreymass')

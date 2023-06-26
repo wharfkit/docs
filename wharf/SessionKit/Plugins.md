@@ -16,7 +16,7 @@ Why
 
 - Links
 
-The specification outlined below is targetting the two types of developers who will directly interact with the `UserInterface`, specifically those involved in building **Plugins** and **Custom User Interfaces**. 
+The specification outlined below is targeting the two types of developers who will directly interact with the `UserInterface`, specifically those involved in building **Plugins** and **Custom User Interfaces**. 
 
 Based on the type of development being done, the following subsections may be most relevant:
 
@@ -78,7 +78,7 @@ interface PromptElement {
 
 - The `type` field must match on of the strings included. Each string represents a different type of prompt 
 - A `label` for the element, typically providing context to the element.
-- A `data` object for the element, which is specific to the element itself and how its renderered.
+- A `data` object for the element, which is specific to the element itself and how its rendered.
 
 The individual element types and required data are further outlined in the [PromptElement](#) document.
 
