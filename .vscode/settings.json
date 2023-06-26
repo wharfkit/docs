@@ -1,0 +1,25 @@
+{
+    "cSpell.enabled": true,
+    "cSpell.languageSettings": [
+        {
+            // use with Markdown files
+            "languageId": "markdown",
+            // Exclude code.
+            "ignoreRegExpList": [
+                "/^\\s*```[\\s\\S]*?^\\s*```/gm"
+            ]
+        }
+    ],
+    "cSpell.words": [
+        "autodocs",
+        "cleos",
+        "eosio",
+        "npmjs",
+        "Struct",
+        "Structs",
+        "underflows",
+        "Unicove",
+        "unserialized",
+        "wharfkit"
+    ]
+}
