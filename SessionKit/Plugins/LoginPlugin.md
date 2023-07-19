@@ -1,3 +1,10 @@
+---
+title: LoginPlugin
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # LoginPlugin
 
 What
@@ -6,7 +13,7 @@ What
 
 How
 
-## Purpose 
+## Purpose
 
 Why
 

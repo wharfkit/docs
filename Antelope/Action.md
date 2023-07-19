@@ -1,8 +1,15 @@
+---
+title: Action
+description: change_me
+category: Antelope
+published: false
+---
+
 # Action
 
 Each Antelope [Transaction](#) contains an array of `Action` objects, with each `Action` being an independent call to a smart contract function. Each `Action` is individually serialized using the `ABI` for the associated smart contract it executes against, at the block height it was submitted.
 
-While both the [SessionKit](#) and [ContractKit](#) abstracts away this complexity, assembling an `Action` manually is something application developers may have to do at times in order to request a signature from their users. 
+While both the [SessionKit](#) and [ContractKit](#) abstracts away this complexity, assembling an `Action` manually is something application developers may have to do at times in order to request a signature from their users.
 
 ## Anatomy of an Action
 
@@ -26,7 +33,7 @@ Every `Action` performed against a smart contract on an Antelope blockchain cons
         from: 'teamgreymass',
         to: 'funds.gm',
         quantity: '0.0001 EOS',
-        memo: 'Thanks for all the fish!' 
+        memo: 'Thanks for all the fish!'
     }
 }
 ```
@@ -57,7 +64,7 @@ The serialized data contained within the `data` field is encoded using the [Stru
 
 ## Usage
 
-A new smart contract `Action` can be created in multiple ways, depending on whether the data is already serialized. 
+A new smart contract `Action` can be created in multiple ways, depending on whether the data is already serialized.
 
 ```ts
 // Passing in data which contains serialized data (either raw or using a Struct)
@@ -77,10 +84,10 @@ Passing in raw serialized data does not require an ABI to assemble an `Action`.
 
 ```ts
 const data = {
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data: '80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821',
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data: "80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821",
 }
 
 const typedAction = Action.from(data)
@@ -93,26 +100,26 @@ const typedAction = Action.from(data)
 A [Struct](#) can be used to wrap unserialized `Action` data for automatic serialization.
 
 ```ts
-@Struct.type('transfer')
+@Struct.type("transfer")
 export class Transfer extends Struct {
-    @Struct.field(Name) from!: Name
-    @Struct.field(Name) to!: Name
-    @Struct.field(Asset) quantity!: Asset
-    @Struct.field('string') memo!: string
+  @Struct.field(Name) from!: Name
+  @Struct.field(Name) to!: Name
+  @Struct.field(Asset) quantity!: Asset
+  @Struct.field("string") memo!: string
 }
 
 const data = Transfer.from({
-    from: 'teamgreymass',
-    to: 'funds.gm',
-    quantity: '0.0001 EOS',
-    memo: 'Thanks for all the fish!',
+  from: "teamgreymass",
+  to: "funds.gm",
+  quantity: "0.0001 EOS",
+  memo: "Thanks for all the fish!",
 })
 
 const untypedAction = {
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data,
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data,
 }
 
 const typedAction = Action.from(untypedAction)
@@ -126,20 +133,20 @@ An [ABI](#) can also be passed as a 2nd parameter to the `.from` method to autom
 
 ```ts
 const data = {
-    from: 'teamgreymass',
-    to: 'funds.gm',
-    quantity: '0.0001 EOS',
-    memo: 'Thanks for all the fish!',
+  from: "teamgreymass",
+  to: "funds.gm",
+  quantity: "0.0001 EOS",
+  memo: "Thanks for all the fish!",
 }
 
 const untypedAction = {
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data,
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data,
 }
 
-const { abi } = await client.v1.chain.get_abi('eosio.token')
+const { abi } = await client.v1.chain.get_abi("eosio.token")
 
 const typedAction = Action.from(untypedAction, abi)
 
@@ -152,17 +159,17 @@ The [ABI](#) passed in as a 2nd parameter can also be manually defined or read f
 
 ```ts
 const data = {
-    from: 'teamgreymass',
-    to: 'funds.gm',
-    quantity: '0.0001 EOS',
-    memo: 'Thanks for all the fish!',
+  from: "teamgreymass",
+  to: "funds.gm",
+  quantity: "0.0001 EOS",
+  memo: "Thanks for all the fish!",
 }
 
 const untypedAction = {
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data,
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data,
 }
 
 const abi = ABI.from({
@@ -171,27 +178,27 @@ const abi = ABI.from({
   variants: [],
   structs: [
     {
-        "name": "transfer",
-        "base": "",
-        "fields": [
-            {
-                "name": "from",
-                "type": "name"
-            },
-            {
-                "name": "to",
-                "type": "name"
-            },
-            {
-                "name": "quantity",
-                "type": "asset"
-            },
-            {
-                "name": "memo",
-                "type": "string"
-            }
-        ]
-    }
+      name: "transfer",
+      base: "",
+      fields: [
+        {
+          name: "from",
+          type: "name",
+        },
+        {
+          name: "to",
+          type: "name",
+        },
+        {
+          name: "quantity",
+          type: "asset",
+        },
+        {
+          name: "memo",
+          type: "string",
+        },
+      ],
+    },
   ],
   actions: [],
   tables: [],
@@ -212,19 +219,19 @@ Instances of the `Action` type can also be used to decode the action data and re
 Any [Struct](#) types defined in-code can be passed to `decodeData` to decode the serialized data into an object.
 
 ```ts
-@Struct.type('transfer')
+@Struct.type("transfer")
 class Transfer extends Struct {
-    @Struct.field(Name) from!: Name
-    @Struct.field(Name) to!: Name
-    @Struct.field(Asset) quantity!: Asset
-    @Struct.field('string') memo!: string
+  @Struct.field(Name) from!: Name
+  @Struct.field(Name) to!: Name
+  @Struct.field(Asset) quantity!: Asset
+  @Struct.field("string") memo!: string
 }
 
 const typedAction = Action.from({
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data: '80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821',
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data: "80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821",
 })
 
 const decoded = typedAction.decodeData(Transfer)
@@ -242,22 +249,21 @@ const decoded = typedAction.decodeData(Transfer)
 */
 ```
 
-
 #### Using decodeAction with an ABI
 
 Any [ABI](#) either manually defined in-code or retrieved from an [APIClient](#) can be passed to `decodeData` to decode the serialized data into an object.
 
 ```ts
 const data = {
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data: '80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821',
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data: "80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821",
 }
 
 const typedAction = Action.from(data)
 
-const { abi } = await client.v1.chain.get_abi('eosio.token')
+const { abi } = await client.v1.chain.get_abi("eosio.token")
 
 const decoded = typedAction.decodeData(abi)
 
@@ -279,19 +285,19 @@ const decoded = typedAction.decodeData(abi)
 The `decodeData` function returns all values in Antelope typed formats ([Name](#), [Asset](#), etc) for developers to work with in their applications. In order to display this data in a human readable format, the [Serializer](#) provides a helper function called [objectify](#) which will iterate over a data structure and convert all the Antelope types to human readable values.
 
 ```ts
-@Struct.type('transfer')
+@Struct.type("transfer")
 class Transfer extends Struct {
-    @Struct.field(Name) from!: Name
-    @Struct.field(Name) to!: Name
-    @Struct.field(Asset) quantity!: Asset
-    @Struct.field('string') memo!: string
+  @Struct.field(Name) from!: Name
+  @Struct.field(Name) to!: Name
+  @Struct.field(Asset) quantity!: Asset
+  @Struct.field("string") memo!: string
 }
 
 const typedAction = Action.from({
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{actor: 'foo', permission: 'active'}],
-    data: '80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821',
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data: "80b1915e5d268dca00000092019ca65e010000000000000004454f5300000000185468616e6b7320666f7220616c6c20746865206669736821",
 })
 
 const decoded = typedAction.decodeData(Transfer)

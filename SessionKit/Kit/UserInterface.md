@@ -1,3 +1,10 @@
+---
+title: UserInterface
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # UserInterface
 
 An instance of a `UserInterface` is required for the [SessionKit](#) and is responsible for rendering out information to the end user and facilitating interaction when required. The [SessionKit](#) does this by exporting an interface named `UserInterface`, which defines the patterns used for interactions during the [login](#) and [transact](#) method calls.
@@ -12,18 +19,20 @@ A typical developer will never make calls directly against the `UserInterface`, 
 All developers who are building interactive applications will however be required to include an instance of a `UserInterface` to the [SessionKit](#) during instantiation, an example of which is below:
 
 ```ts
-import { SessionKit } from '@wharfkit/session'
-import { WebRenderer } from '@wharfkit/web-renderer'
-import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor'
+import { SessionKit } from "@wharfkit/session"
+import { WebRenderer } from "@wharfkit/web-renderer"
+import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 
 const sessionKit = new SessionKit({
-   appName: 'myapp',
-   chains: [{
-       id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-       url: 'http://jungle4.greymass.com'
-   }],
-   ui: new WebRenderer(), // <-- An instance of a `UserInterface`
-   walletPlugins: [new WalletPluginAnchor()],
+  appName: "myapp",
+  chains: [
+    {
+      id: "73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d",
+      url: "http://jungle4.greymass.com",
+    },
+  ],
+  ui: new WebRenderer(), // <-- An instance of a `UserInterface`
+  walletPlugins: [new WalletPluginAnchor()],
 })
 ```
 
@@ -84,7 +93,7 @@ When developers make calls to these methods in their applications, a life cycle 
 
 #### Login
 
-When an application calls the [login](#) method of the [SessionKit](#) a series of events is triggered against an implemented `UserInterface` and its methods. 
+When an application calls the [login](#) method of the [SessionKit](#) a series of events is triggered against an implemented `UserInterface` and its methods.
 
 Listed below are all of the methods this sequence will call in chronological order.
 
@@ -116,6 +125,7 @@ This data will be used in order to facilitate a number of scenarios based on the
 The [SessionKit](#) will await a response from the `UserInterface` conforming to the [UserInterfaceLoginResponse](#) pattern or until an `Error` is thrown.
 
 ##### onLoginComplete
+
 ```ts
 onLoginComplete: () => Promise<void>
 ```
@@ -124,11 +134,12 @@ After the [WalletPlugin](#) successfully completes its login operations, the [Se
 
 #### Transact
 
-When an application calls the [transact](#) method on a [Session](#), a series of events is triggered against an implemented `UserInterface` and its methods. 
+When an application calls the [transact](#) method on a [Session](#), a series of events is triggered against an implemented `UserInterface` and its methods.
 
 Listed below are all of the methods this sequence will call in chronological order.
 
 ##### onTransact
+
 ```ts
 onTransact: () => Promise<void>
 ```
@@ -136,6 +147,7 @@ onTransact: () => Promise<void>
 Immediately upon the developer's call to [transact](#) against the [SessionKit](#), the `onTransact` call is made against the `UserInterface`. This call, similar to `onLogin`, passes no data and expects no specific response, but gives the implemented user interface time to prepare for the incoming request.
 
 ##### onSign
+
 ```ts
 onSign: () => Promise<void>
 ```
@@ -143,6 +155,7 @@ onSign: () => Promise<void>
 After any included [TransactPlugin](#) instances have had their opportunity to process their [beforeSign](#) hooks, the `onSign` call is made to the user interface to indicate that the transaction is about to be signed by the [WalletPlugin](#).
 
 ##### onSignComplete
+
 ```ts
 onSignComplete: () => Promise<void>
 ```
@@ -150,24 +163,27 @@ onSignComplete: () => Promise<void>
 Following a successful call to the [WalletPlugin](#) to sign the transaction and all [TransactPlugin](#) instances have executed their [afterSign](#) hooks, the `onSignComplete` call is made to indicate a signature has been retrieved.
 
 ##### onBroadcast
+
 ```ts
 onBroadcast: () => Promise<void>
 ```
 
-If the [transact](#) call has the default flag of `broadcast: true`, the `onBroadcast` call is made to the user interface as it prepares to broadcast the transaction to the network. 
+If the [transact](#) call has the default flag of `broadcast: true`, the `onBroadcast` call is made to the user interface as it prepares to broadcast the transaction to the network.
 
 Note that if the `broadcast: false` flag is set, this event will not be called.
 
 ##### onBroadcastComplete
+
 ```ts
 onBroadcastComplete: () => Promise<void>
 ```
 
-Following a successful call to broadcast the transaction and execution of the [TransactPlugin](#) instances [afterBroadcast](#) hooks, the `onBroadcastComplete` call is made to indicate that the transaction has been successfully broadcast to the designated blockchain. 
+Following a successful call to broadcast the transaction and execution of the [TransactPlugin](#) instances [afterBroadcast](#) hooks, the `onBroadcastComplete` call is made to indicate that the transaction has been successfully broadcast to the designated blockchain.
 
 Note that if the `broadcast: false` flag is set, this event will not be called.
 
 ##### onTransactComplete
+
 ```ts
 onTransactComplete: () => Promise<void>
 ```
@@ -176,7 +192,7 @@ Upon success of the entire [transact](#) life cycle flow, the `onTransactComplet
 
 ### Prompt
 
-Outside of the event-driven life cycle methods above, one of the most important abilities a `UserInterface` provides is for [Plugins](#) to interact with users. This is done using the `prompt` call made available through the [context](#) given to every [plugin](#) to either display information or await some form of user interaction. 
+Outside of the event-driven life cycle methods above, one of the most important abilities a `UserInterface` provides is for [Plugins](#) to interact with users. This is done using the `prompt` call made available through the [context](#) given to every [plugin](#) to either display information or await some form of user interaction.
 
 Examples of instances where `prompt` may be called are:
 
@@ -194,9 +210,9 @@ The arguments passed to the `UserInterface` that are accepted by the `prompt` ca
 
 ```ts
 interface PromptArgs {
-   title: string
-   body?: string
-   elements: PromptElement[]
+  title: string
+  body?: string
+  elements: PromptElement[]
 }
 ```
 
@@ -206,14 +222,13 @@ It's up to the renderer to decide the best use of this information, but in gener
 - A `body` may optionally be defined with a text-based description of what you are prompting for
 - The `elements` array consists of one or more `PromptElement` instances, which instruct the `UserInterface` how to present this prompt to the user
 
-
 The `elements` array is populated by one or more `PromptElement` objects that make up the desired layout presented to the user.
 
 ```ts
 interface PromptElement {
-   type: 'accept' | 'asset' | 'button' | 'close' | 'countdown' | 'link' | 'qr' | 'textarea'
-   label?: string
-   data?: unknown
+  type: "accept" | "asset" | "button" | "close" | "countdown" | "link" | "qr" | "textarea"
+  label?: string
+  data?: unknown
 }
 ```
 
@@ -235,21 +250,19 @@ The `prompt` call is asynchronous and the [SessionKit](#) or [Plugin](#) will aw
 
 This response contains no specific data but instead offers the three above logic paths using the [CancelablePromise](#) pattern.
 
-
 ### Logging
 
 ##### status
+
 ```
 status: (message: string) => void
 ```
 
 The `status` method is a generic string-based system on the user interface which allows any process or plugin to provide basic messages directly to the user interface. These can be included in the UI to update the user about details of what process is occurring or for the developer to output as logs for debugging.
 
-
 ### Translation
 
 Part of the **Communication** responsibility of the `UserInterface` is also handling the translation of all the content being passed to the user. The `UserInterface` library should implement an i18n compatible translation library which allows the use of key-based translation strings, which can be provided by either the [SessionKit](#) or any type of [Plugin](#).
-
 
 #### translate
 
@@ -261,14 +274,14 @@ This method must follow the [UserInterfaceTranslateFunction](#) interface and ut
 
 ```ts
 export type UserInterfaceTranslateFunction = (
-   key: string,
-   options?: UserInterfaceTranslateOptions,
-   namespace?: string
+  key: string,
+  options?: UserInterfaceTranslateOptions,
+  namespace?: string
 ) => string
 ```
 
-
 #### getTranslate
+
 ```ts
 getTranslate: (namespace?: string) => UserInterfaceTranslateFunction
 ```
@@ -278,18 +291,19 @@ This method defines how Wharf or [Plugins](#) should retrieve an instance of the
 By default the [AbstractUserInterface](#) class will [define this method](https://github.com/wharfkit/session/blob/20d64d6410effda124265cd94fabf0da8a08e0c8/src/ui.ts#L118-L120) for use in plugins.
 
 #### addTranslations
+
 ```ts
 addTranslations: (translations: LocaleDefinitions) => void
 ```
 
-The final translation responsibility of the `UserInterface` is the ability for Wharf or a plugin to be able to dynamically add translation strings into the user interface. This method is added so that the [SessionKit](#) and  various [Plugins](#) can programmatically add translation strings to the dictionary.
+The final translation responsibility of the `UserInterface` is the ability for Wharf or a plugin to be able to dynamically add translation strings into the user interface. This method is added so that the [SessionKit](#) and various [Plugins](#) can programmatically add translation strings to the dictionary.
 
 The [WebRenderer](#) again serves as [an example of how this can be done](https://github.com/wharfkit/web-renderer/blob/06cddd54ec78d8110747d4e5d67989a8cd1dce8f/src/index.ts#L252-L254).
-
 
 ### Error Handling
 
 #### onError
+
 ```ts
 onError: (error: Error) => Promise<void>
 ```
@@ -298,4 +312,4 @@ A `UserInterface` must define an `onError` method to define how the user interfa
 
 ## Reference
 
-- 
+-

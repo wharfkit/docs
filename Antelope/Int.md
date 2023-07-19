@@ -1,3 +1,10 @@
+---
+title: Int
+description: change_me
+category: Antelope
+published: false
+---
+
 # Int
 
 The `Int` base type extends into a family of different binary integer types with underlying values represented by a [BN.js](https://github.com/indutny/bn.js) instance. These types by default follows C++11 standard for arithmetic operators and conversions to mirror operations found in Antelope smart contracts.
@@ -28,7 +35,7 @@ Any of the above variants of `Int` can be included and used in a project. These 
 ### Basic Usage
 
 ```ts
-import { UInt64 } from '@wharfkit/antelope'
+import { UInt64 } from "@wharfkit/antelope"
 
 const integer = UInt64.from(12345678)
 ```
@@ -139,30 +146,30 @@ When an `Int` type overflows its maximum value, one of the defined behaviors wil
 - `truncate` (default): Truncates or extends bit-pattern with sign extension (C++11 behavior).
 - `throw`: Throws an error if value overflows (or underflows).
 - `clamp`: Clamps the value within the supported range.
- 
+
 ##### DivisionBehavior
 
-When using the division operator on integers, any remainder needs to be automatically handled. For this, a second parameter can optionally be provided to decide which of the 3 options are used: 
+When using the division operator on integers, any remainder needs to be automatically handled. For this, a second parameter can optionally be provided to decide which of the 3 options are used:
 
- - `floor` (default): Round down to nearest integer.
- - `round`: Round to nearest integer.
- - `ceil`: Round up to nearest integer.
+- `floor` (default): Round down to nearest integer.
+- `round`: Round to nearest integer.
+- `ceil`: Round up to nearest integer.
 
 ### Static Methods
 
-All `Int` core types offer static methods based on their integer type. 
+All `Int` core types offer static methods based on their integer type.
 
 #### Minimum Value
 
 ```ts
 // Retrieve the minimum value for a UInt64 as a UInt64
-const minimum = UInt64.min() 
+const minimum = UInt64.min()
 
 console.log(minimum)
 // BN { negative: 0, words: [ 0 ], length: 1, red: null }
 
 console.log(Number(minimum))
-// 0 
+// 0
 ```
 
 #### Maximum Value
@@ -181,7 +188,6 @@ BN {
 }
 */
 
-console.log(Number(maximum)) 
+console.log(Number(maximum))
 // 18446744073709552000
 ```
-

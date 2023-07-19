@@ -1,6 +1,11 @@
-# Architecture
+---
+title: Architecture
+description: The Session Kit is a software development kit focused on managing Antelope-based user sessions in web applications.
+category: SessionKit
+order: 1
+---
 
-One of Wharf's major components in the Session Kit, a software development kit focused on managing Antelope-based user sessions in web applications. 
+One of Wharf's major components in the Session Kit, a software development kit focused on managing Antelope-based user sessions in web applications.
 
 Its major responsibilities are:
 
@@ -64,13 +69,10 @@ Read more in the [SessionKit](#) documentation.
 
 Read more in the [LoginHooks](#) documentation.
 
-
 ### [LoginContext](#)
 
 Read more in the [LoginContext](#) documentation.
 
-
 ### [SessionStorage](#)
 
 Read more in the [SessionStorage](#) documentation.
-

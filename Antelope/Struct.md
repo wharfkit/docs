@@ -1,3 +1,10 @@
+---
+title: Struct
+description: change_me
+category: Antelope
+published: false
+---
+
 The `Struct` class is one in which developers can extend in order to define core or [ABI](#) type objects for use in the [Serializer](#).
 
 The [ContractKit](#) will automatically generate `Struct` objects during its code generation process.
@@ -10,48 +17,47 @@ These types are then imported into the application logic and used whenever trans
 
 https://github.com/greymass/unicove/blob/c98183514bb919719ac46fa97aa931c9d3998152/src/pages/transfer/main.svelte#L51-L56
 
-
 The [abi2core](#) library can also be used to read a smart contract's ABI and automatically generate these instances of `Struct` for a project.
 
 https://github.com/greymass/abi2core/
 
 ## Defining Structs
 
-Each `Struct` can either be written to use TypeScript's [experimental decorators](https://www.typescriptlang.org/tsconfig#experimentalDecorators) or written more verbosely in plain Javascript. 
+Each `Struct` can either be written to use TypeScript's [experimental decorators](https://www.typescriptlang.org/tsconfig#experimentalDecorators) or written more verbosely in plain Javascript.
 
 This is an example of the `eosio.token` contract and its `transfer` action, written both using the experimental decorators and then in plain javascript.
 
 ```ts
 // Using experimentalDecorators in TypeScript
-@Struct.type('transfer')
+@Struct.type("transfer")
 export class Transfer extends Struct {
-    @Struct.field(Name) from!: Name
-    @Struct.field(Name) to!: Name
-    @Struct.field(Asset) quantity!: Asset
-    @Struct.field('string') memo!: string
+  @Struct.field(Name) from!: Name
+  @Struct.field(Name) to!: Name
+  @Struct.field(Asset) quantity!: Asset
+  @Struct.field("string") memo!: string
 }
 
 // Using plain JavaScript
 class Transfer extends Struct {
-    static abiName = 'transfer'
-    static abiFields = [
-      {
-        name: 'from',
-        type: Name,
-      },
-      {
-        name: 'to',
-        type: Name,
-      },
-      {
-        name: 'quantity',
-        type: Asset,
-      },
-      {
-        name: 'memo',
-        type: 'string',
-      },
-    ]
+  static abiName = "transfer"
+  static abiFields = [
+    {
+      name: "from",
+      type: Name,
+    },
+    {
+      name: "to",
+      type: Name,
+    },
+    {
+      name: "quantity",
+      type: Asset,
+    },
+    {
+      name: "memo",
+      type: "string",
+    },
+  ]
 }
 ```
 
@@ -61,10 +67,10 @@ Once a `Struct` class is defined, they can be used to define the data within an 
 
 ```ts
 const data = Transfer.from({
-    from: 'teamgreymass',
-    to: 'funds.gm',
-    quantity: '0.0001 EOS',
-    memo: ''
+  from: "teamgreymass",
+  to: "funds.gm",
+  quantity: "0.0001 EOS",
+  memo: "",
 })
 ```
 
@@ -72,15 +78,15 @@ These can also be passed directly into an [Action](#) for automatic serializatio
 
 ```ts
 const action = Action.from({
-    account: 'eosio.token',
-    name: 'transfer',
-    authorization: [{ actor: 'foo', permission: 'active' }],
-    data: Transfer.from({
-        from: 'teamgreymass',
-        to: 'funds.gm',
-        quantity: '0.0001 EOS',
-        memo: ''
-    })
+  account: "eosio.token",
+  name: "transfer",
+  authorization: [{ actor: "foo", permission: "active" }],
+  data: Transfer.from({
+    from: "teamgreymass",
+    to: "funds.gm",
+    quantity: "0.0001 EOS",
+    memo: "",
+  }),
 })
 ```
 

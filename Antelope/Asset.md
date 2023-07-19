@@ -1,3 +1,10 @@
+---
+title: Asset
+description: change_me
+category: Antelope
+published: false
+---
+
 # Asset
 
 The `Asset` type represents a token balance on an Antelope chain and is the combination of two `UInt64` values, one for the token quantity and one for the token `Symbol`.
@@ -9,7 +16,7 @@ The `Asset` type represents a token balance on an Antelope chain and is the comb
 The `Asset` type can be imported and then initialized in multiple ways. The first and most common way to initialize an asset is by passing a formatted string.
 
 ```ts
-import { Asset } from '@wharfkit/antelope'
+import { Asset } from "@wharfkit/antelope"
 
 const balance = Asset.from("1.0000 FOO")
 ```
@@ -20,10 +27,10 @@ An example representation of the above `Asset` in JSON data would be:
 
 ```json
 {
-    "precision": 4,
-    "symbol": "FOO",
-    "units": 10000,
-    "value": 1
+  "precision": 4,
+  "symbol": "FOO",
+  "units": 10000,
+  "value": 1
 }
 ```
 
@@ -31,7 +38,7 @@ An example representation of the above `Asset` in JSON data would be:
 
 An `Asset` can also be created using a combination of numeric and `Symbol` data by passing the numeric value as the first parameter, followed by either a `Symbol` instance or a string representation of a symbol.
 
-A string representation of a `Symbol` is a numeric value of the decimal precision, followed by the string asset label. 
+A string representation of a `Symbol` is a numeric value of the decimal precision, followed by the string asset label.
 
 ```ts
 // 1 value + 4 precision + "foo" label
@@ -53,7 +60,7 @@ const balance = Asset.from(0.05, Asset.Symbol.fromParts("FOO", 4))
 
 ### From units
 
-The `fromUnits` method is also available to build `Asset` instances when performing integer math. 
+The `fromUnits` method is also available to build `Asset` instances when performing integer math.
 
 ```ts
 // 10000 units + 4 precision + "EOS" label
@@ -67,7 +74,6 @@ const balance = Asset.fromUnits(100, "8,WAX")
 // 300 units + 4 precision + "FOO" label
 const balance = Asset.fromUnits(300, "4,FOO")
 // 0.0300 FOO
-
 ```
 
 ## Properties

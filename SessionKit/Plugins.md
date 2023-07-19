@@ -1,3 +1,10 @@
+---
+title: Plugins
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # Plugins
 
 Wharf's Session Kit offers developers the opportunity to customize how a Session behaves through the use of the plugin architecture.
@@ -8,7 +15,7 @@ LoginPlugin, TransactPlugin, WalletPlugin
 
 How
 
-## Purpose 
+## Purpose
 
 Why
 
@@ -16,7 +23,7 @@ Why
 
 - Links
 
-The specification outlined below is targeting the two types of developers who will directly interact with the `UserInterface`, specifically those involved in building **Plugins** and **Custom User Interfaces**. 
+The specification outlined below is targeting the two types of developers who will directly interact with the `UserInterface`, specifically those involved in building **Plugins** and **Custom User Interfaces**.
 
 Based on the type of development being done, the following subsections may be most relevant:
 
@@ -40,7 +47,6 @@ A developer who is creating a custom `UserInterface` instance will need to imple
 
 An example of how a `UserInterface` can be implemented can be found in the [WebRenderer](#) package.
 
-
 ### Prompt
 
 Outside of the event-driven life cycle methods above, one of the most important abilities a `UserInterface` provides is for [Plugins](#) to interact with users. This is done using the `prompt` call made available through the [context](#) given to every [plugin](#) to either display information or await some form of user interaction. Examples of instances where `prompt` may be called are:
@@ -55,9 +61,9 @@ The arguments accepted by the `prompt` call must match:
 
 ```ts
 interface PromptArgs {
-    title: string
-    body?: string
-    elements: PromptElement[]
+  title: string
+  body?: string
+  elements: PromptElement[]
 }
 ```
 
@@ -65,18 +71,17 @@ interface PromptArgs {
 - A `body` may optionally be defined with a text-based description of what you are prompting for.
 - The `elements` array consists of one or more `PromptElement` instances, which instruct the `UserInterface` how to present this prompt to the user.
 
-
 The `PromptElement` array is populated by one or more objects that make up the desired layout presented to the user, and are defined as follows:
 
 ```ts
 interface PromptElement {
-    type: 'accept' | 'asset' | 'button' | 'close' | 'countdown' | 'link' | 'qr' | 'textarea'
-    label?: string
-    data?: unknown
+  type: "accept" | "asset" | "button" | "close" | "countdown" | "link" | "qr" | "textarea"
+  label?: string
+  data?: unknown
 }
 ```
 
-- The `type` field must match on of the strings included. Each string represents a different type of prompt 
+- The `type` field must match on of the strings included. Each string represents a different type of prompt
 - A `label` for the element, typically providing context to the element.
 - A `data` object for the element, which is specific to the element itself and how its rendered.
 

@@ -1,3 +1,10 @@
+---
+title: APIClient
+description: change_me
+category: Antelope
+published: false
+---
+
 # APIClient
 
 The `APIClient` provided by the [Antelope](#) library is an abstraction built on top of a [FetchProvider](#) that gives developers access to the native API calls.
@@ -10,7 +17,7 @@ In browser-based environments in order to create a working client, the only requ
 
 ```ts
 const client = new APIClient({
-    url: 'https://jungle4.greymass.com'
+  url: "https://jungle4.greymass.com",
 })
 ```
 
@@ -18,11 +25,10 @@ In a nodejs environment where the version is less than v18 and [fetch](#) isn't 
 
 This example includes [node-fetch](https://www.npmjs.com/package/node-fetch) and passes it to the `FetchProvider` so the `APIClient` can make requests.
 
-
 ```ts
-const fetch = require('node-fetch')
+const fetch = require("node-fetch")
 
-const provider = new FetchProvider('https://jungle4.greymass.com', { fetch })
+const provider = new FetchProvider("https://jungle4.greymass.com", { fetch })
 
 const client = new APIClient({ provider })
 ```
@@ -30,7 +36,6 @@ const client = new APIClient({ provider })
 ### Using an APIClient
 
 Once an `APIClient` is established for a given chain, it will give access to a number of predefined API endpoints as method calls. The list of available methods embedded in the `APIClient` can be found in either the [ChainAPI](https://wharfkit.github.io/antelope/classes/ChainAPI.html) or [HistoryAPI](https://wharfkit.github.io/antelope/classes/HistoryAPI.html) autodocs. The autocompletion helpers in the developers IDE should also prompt with the available options in either `client.v1.chain` or `client.v1.history`.
-
 
 Every API call made through the `APIClient` returns a promise that must be handled either through `await` or `.then`. The example below illustrates the two ways you could call the `/v1/chain/get_info` API endpoint and return a response.
 
@@ -40,7 +45,7 @@ const response = await client.v1.chain.get_info()
 // or ...
 
 client.v1.chain.get_info().then((response) => {
-    // your code
+  // your code
 })
 ```
 
@@ -148,9 +153,9 @@ If an API call isn't supported within the `APIClient`, a pull request can be mad
 
 #### Contributing code for new API calls
 
-An example commit implementing the `v1/chain/get_accounts_by_authorizers` can be [found here for reference](https://github.com/wharfkit/antelope/pull/59/commits/b85448be3c99fccb45d76d310b698ea6a36ec7eb). 
+An example commit implementing the `v1/chain/get_accounts_by_authorizers` can be [found here for reference](https://github.com/wharfkit/antelope/pull/59/commits/b85448be3c99fccb45d76d310b698ea6a36ec7eb).
 
-This commit first [defines the call itself](https://github.com/wharfkit/antelope/pull/59/commits/b85448be3c99fccb45d76d310b698ea6a36ec7eb#diff-ddf60e387c64603f070d9568d67eb5866e70c146dc69aa016791ab730f49539aR66-R73) as a function with the appropriately typed parameters in the file `src/api/v1/chain.ts`. It then utilizes the internal `client.call` function and includes the URL `path`, required Antelope typed `params`, and the `responseType` to indicate which types we expect in the API response. 
+This commit first [defines the call itself](https://github.com/wharfkit/antelope/pull/59/commits/b85448be3c99fccb45d76d310b698ea6a36ec7eb#diff-ddf60e387c64603f070d9568d67eb5866e70c146dc69aa016791ab730f49539aR66-R73) as a function with the appropriately typed parameters in the file `src/api/v1/chain.ts`. It then utilizes the internal `client.call` function and includes the URL `path`, required Antelope typed `params`, and the `responseType` to indicate which types we expect in the API response.
 
 ```ts
 async get_accounts_by_authorizers(keys: PublicKeyType[]) {
@@ -165,18 +170,19 @@ async get_accounts_by_authorizers(keys: PublicKeyType[]) {
 The `responseType` is named [AccountsByAuthorizers](https://github.com/wharfkit/antelope/pull/59/commits/b85448be3c99fccb45d76d310b698ea6a36ec7eb#diff-4fed12baf5e6587e33b5186d9ecfbdfd88e2076de11f00ac676c47fe657844cfR162-R176) and is defined in `src/api/v1/types.ts`. This [Struct](#) defines the structure of the data the API will return and defines all the native Antelope types for those fields.
 
 ```ts
-@Struct.type('account_by_authorizers_row')
+@Struct.type("account_by_authorizers_row")
 export class AccountByAuthorizersRow extends Struct {
-    @Struct.field(Name) declare account_name: Name
-    @Struct.field(Name) declare permission_name: Name
-    @Struct.field(PublicKey) declare authorizing_key: PublicKey
-    @Struct.field(Weight) declare weight: Weight
-    @Struct.field(UInt32) declare threshold: UInt32
+  @Struct.field(Name) declare account_name: Name
+  @Struct.field(Name) declare permission_name: Name
+  @Struct.field(PublicKey) declare authorizing_key: PublicKey
+  @Struct.field(Weight) declare weight: Weight
+  @Struct.field(UInt32) declare threshold: UInt32
 }
 
-@Struct.type('account_by_authorizers')
+@Struct.type("account_by_authorizers")
 export class AccountsByAuthorizers extends Struct {
-    @Struct.field(AccountByAuthorizersRow, {array: true}) declare accounts: AccountByAuthorizersRow[]
+  @Struct.field(AccountByAuthorizersRow, { array: true })
+  declare accounts: AccountByAuthorizersRow[]
 }
 ```
 
@@ -194,10 +200,10 @@ If an endpoint isn't defined and available for immediate use, the above call str
 
 ```ts
 const response = await client.call({
-    path: '/v1/chain/get_account',
-    params: {
-        account_name: 'teamgreymass',
-    },
+  path: "/v1/chain/get_account",
+  params: {
+    account_name: "teamgreymass",
+  },
 })
 ```
 
@@ -205,10 +211,10 @@ In this example, it will call the `v1/chain/get_account` endpoint of the API and
 
 ```ts
 const response = await client.call({
-    path: '/v1/chain/get_account',
-    params: {
-        account_name: 'teamgreymass',
-    },
-    responseType: AccountObject // Struct defining the response type
+  path: "/v1/chain/get_account",
+  params: {
+    account_name: "teamgreymass",
+  },
+  responseType: AccountObject, // Struct defining the response type
 })
 ```

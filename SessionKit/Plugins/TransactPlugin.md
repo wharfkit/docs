@@ -1,3 +1,10 @@
+---
+title: TransactPlugin
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # TransactPlugin
 
 What
@@ -7,15 +14,15 @@ What
 How
 
 ```ts
-import {TransactPluginResourceProvider} from '@wharfkit/transact-plugin-resource-provider'
+import { TransactPluginResourceProvider } from "@wharfkit/transact-plugin-resource-provider"
 
 const sessionKit = new SessionKit({
-   // ... the other required arguments
-   transactPlugins: [new TransactPluginResourceProvider()],
+  // ... the other required arguments
+  transactPlugins: [new TransactPluginResourceProvider()],
 })
 ```
 
-## Purpose 
+## Purpose
 
 Why
 

@@ -1,3 +1,10 @@
+---
+title: Login
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # Login
 
 What
@@ -6,7 +13,7 @@ What
 
 How
 
-## Purpose 
+## Purpose
 
 Why
 

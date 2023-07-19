@@ -1,3 +1,10 @@
+---
+title: LoginContext
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # LoginContext
 
 What
@@ -6,14 +13,13 @@ What
 
 How
 
-## Purpose 
+## Purpose
 
 Why
 
 ## Reference
 
 - Links
-
 
 The `LoginContext` will provide information it knows about from the `SessionKit` configuration, including data relevant to:
 
@@ -32,7 +38,7 @@ During this call, the `UserInterface` itself needs to use this information and r
 
 The end user themselves can be prompted for this information through custom UI elements or the `UserInterface` itself can make these decisions on behalf of the user.
 
-Once this information is returned to the [SessionKit](#), the following will take place: 
+Once this information is returned to the [SessionKit](#), the following will take place:
 
 - Any registered [LoginPlugin](#) with `beforeLogin` hooks will be executed.
 - The selected [WalletPlugin](#) will take over to perform the login operation.

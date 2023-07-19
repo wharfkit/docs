@@ -1,3 +1,10 @@
+---
+title: Context
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # Context
 
 A `Context` is a short lived state object that exists for the duration of a [Login](#) or [Transact](#) call.
@@ -6,7 +13,7 @@ A `Context` is a short lived state object that exists for the duration of a [Log
 
 How
 
-## Purpose 
+## Purpose
 
 Why
 

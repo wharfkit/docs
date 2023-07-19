@@ -1,3 +1,10 @@
+---
+title: Hooks
+description: change_me
+category: SessionKit
+order: 1
+---
+
 # SessionKit
 
 What
@@ -6,7 +13,7 @@ What
 
 How
 
-## Purpose 
+## Purpose
 
 Why
 

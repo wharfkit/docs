@@ -1,3 +1,9 @@
+---
+title: outline
+description: change_me
+category: change_me
+---
+
 - SessionKit
     - Let a user login
     - Allow a user perform a transaction
