@@ -1,20 +1,20 @@
 ---
 title: ABI
-description: change_me
+description: A data type representing an application binary interface (ABI) which can be used to describe a smart contract and provide instructions for data serialization.
 category: Antelope
-published: false
+published: true
 ---
 
 # ABI
 
-The Antelope ABI (Application Binary Interface) is a JSON data structure
-that defines how data is encoded/decoded between binary and JSON representations
+The ABI ([Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)) in Antelope-based blockchains is a JSON data structure that defines the structure of a [Smart Contract](#) and instructs the [Serializer](#) on how to encode or decode data.
 
-The `ABI` objects are used when encoding or decoding data.
+## Classes
 
-## Creating
 
-An `ABI` can be loaded from a public API
+## Loading an ABI
+
+An `ABI` can be loaded from a public API using the `APIClient`.
 
 ```ts
 const client = new APIClient({ url: "https://jungle4.greymass.com" })
@@ -25,6 +25,28 @@ if (response.abi) {
   const abi = ABI.from(response.abi)
   assert.equal(abi instanceof ABI, true)
 }
+```
+
+```ts
+const abi: ABIDef = {
+    structs: [
+        {
+            base: '',
+            name: 'transfer',
+            fields: [
+                {name: 'from', type: 'name'},
+                {name: 'to', type: 'name'},
+                {name: 'quantity', type: 'asset'},
+                {name: 'memo', type: 'string'},
+            ],
+        },
+    ],
+    actions: [{name: 'transfer', type: 'transfer', ricardian_contract: ''}],
+}
+```
+
+```ts
+const abi: ABIDef = '{"structs":[{"base":"","name":"transfer","fields":[{"name":"from","type":"name"},{"name":"to","type":"name"},{"name":"quantity","type":"asset"},{"name":"memo","type":"string"}]}],"actions":[{"name":"transfer","type":"transfer","ricardian_contract":""}]}'
 ```
 
 An `ABI` can also be defined manually as code:
