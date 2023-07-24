@@ -5,6 +5,8 @@ category: SessionKit
 order: 1
 ---
 
+# Architecture
+
 One of Wharf's major components in the Session Kit, a software development kit focused on managing Antelope-based user sessions in web applications.
 
 Its major responsibilities are:
